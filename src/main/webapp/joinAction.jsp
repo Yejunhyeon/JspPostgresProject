@@ -15,6 +15,20 @@
 </head>
 <body>
 <% 
+		//현재 세션 상태를 체크한다
+		String userID = null;
+		if(session.getAttribute("userID") != null){
+			userID = (String)session.getAttribute("userID");
+		}
+		// 이미 로그인했으면 회원가입을 할 수 없게 한다
+		if(userID != null){
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("alert('이미 로그인이 되어 있습니다')");
+			script.println("location.href='mypage.jsp'");
+			script.println("</script>");
+		}
+
 //회원가입 도중 입력하지 못한 칸이 있으면 경고창을 띄워주고 다시 이전 화면으로 
  if(user.getUserID()== null || user.getUserPassword() == null || user.getUserName() == null ||user.getUserEmail() == null) {
 	 	PrintWriter script = response.getWriter();
@@ -36,7 +50,7 @@
 		 PrintWriter script = response.getWriter();
 		 script.println("<script>");
 		 script.println("alert('회원가입 성공')");
-		 script.println("location.href='main.jsp'");
+		 script.println("location.href='mypage.jsp'");
 		 script.println("</script>");	
 	 }
  }
